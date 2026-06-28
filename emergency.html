@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Contacts | चिलुआ गाँव</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#2d6a4f;--green-lt:#40916c;--gold:#e9c46a;--red:#be123c;--cream:#fefae0;--dark:#1b1b1b;--muted:#6b7280;--card-bg:#f9f6ee;--border:#d4c99a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
+  .nav-brand{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.3rem;padding:14px 0;text-decoration:none;}
+  .nav-links{display:flex;flex-wrap:wrap;gap:4px;padding:8px 0;}
+  .nav-links a{color:#d1fae5;font-size:0.78rem;padding:6px 10px;border-radius:4px;text-decoration:none;}
+  .page-hero{background:linear-gradient(135deg,#be123c,#9f1239);color:white;padding:60px 24px;text-align:center;}
+  .page-hero h1{font-family:'Playfair Display',serif;font-size:2.5rem;color:#fef2f2;}
+  .page-hero p{color:#fecdd3;margin-top:8px;}
+  .section{padding:50px 24px;max-width:1000px;margin:0 auto;}
+  .section-title{font-family:'Playfair Display',serif;font-size:1.6rem;color:var(--green);margin-bottom:8px;}
+  hr{border:none;border-top:2px solid var(--border);margin:12px 0 28px;}
+  .e-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:16px;}
+  .e-card{background:var(--card-bg);border:2px solid #fecdd3;border-radius:12px;padding:24px;text-align:center;}
+  .e-card .icon{font-size:2.5rem;margin-bottom:10px;}
+  .e-card h4{color:var(--red);font-size:0.95rem;margin-bottom:4px;}
+  .e-card .num{font-size:1.8rem;font-weight:800;color:var(--red);}
+  .e-card .sub{font-size:0.75rem;color:var(--muted);margin-top:4px;}
+  .e-card a.call-btn{display:inline-block;margin-top:10px;background:var(--red);color:white;padding:7px 18px;border-radius:20px;text-decoration:none;font-size:0.82rem;font-weight:600;}
+  .near-section{background:var(--card-bg);border:1px solid var(--border);border-radius:12px;padding:24px;margin-top:20px;}
+  .near-section h4{color:var(--green);margin-bottom:12px;}
+  .near-table{width:100%;border-collapse:collapse;font-size:0.85rem;}
+  .near-table td{padding:8px 10px;border-bottom:1px solid var(--border);}
+  .near-table td:first-child{font-weight:600;color:var(--green);}
+  footer{background:var(--green);color:#a7f3d0;text-align:center;padding:30px 24px;font-size:0.82rem;}
+  footer a{color:var(--gold);text-decoration:none;}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-brand" href="index.html">🏘️ चिलुआ गाँव</a>
+  <div class="nav-links">
+    <a href="index.html">🏠 Home</a><a href="health.html">🏥 Health</a><a href="blood.html">🩸 Blood</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <h1>🚨 Emergency Contacts</h1>
+  <p>आपातकाल में यह नंबर काम आएंगे — इन्हें Save करके रखें</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">राष्ट्रीय हेल्पलाइन</h2><hr>
+  <div class="e-grid">
+    <div class="e-card"><div class="icon">👮</div><h4>Police</h4><div class="num">100</div><div class="sub">24×7 उपलब्ध</div><a href="tel:100" class="call-btn">📞 Call</a></div>
+    <div class="e-card"><div class="icon">🚑</div><h4>Ambulance</h4><div class="num">108</div><div class="sub">Free Emergency Service</div><a href="tel:108" class="call-btn">📞 Call</a></div>
+    <div class="e-card"><div class="icon">🔥</div><h4>Fire Brigade</h4><div class="num">101</div><div class="sub">आग लगने पर</div><a href="tel:101" class="call-btn">📞 Call</a></div>
+    <div class="e-card"><div class="icon">⚡</div><h4>Electricity</h4><div class="num">1912</div><div class="sub">UPPCL Helpline</div><a href="tel:1912" class="call-btn">📞 Call</a></div>
+    <div class="e-card"><div class="icon">👩‍⚕️</div><h4>Women Helpline</h4><div class="num">1090</div><div class="sub">UP Women Helpline</div><a href="tel:1090" class="call-btn">📞 Call</a></div>
+    <div class="e-card"><div class="icon">🧒</div><h4>Child Helpline</h4><div class="num">1098</div><div class="sub">Childline India</div><a href="tel:1098" class="call-btn">📞 Call</a></div>
+  </div>
+
+  <h2 class="section-title" style="margin-top:40px;">स्थानीय संपर्क</h2><hr>
+  <div class="near-section">
+    <h4>📍 Chilua / Hata Area — Local Numbers (Update करें)</h4>
+    <table class="near-table">
+      <tr><td>Gram Pradhan</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>Gram Sachiv (Secretary)</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>ASHA Worker</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>Anganwadi Worker</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>Veterinary Doctor</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>Nearest PHC / CHC</td><td>2-5 km दूर — नाम अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+      <tr><td>Nearest Police Chowki</td><td>अपडेट करें</td><td><a href="#">📞 Call</a></td></tr>
+    </table>
+  </div>
+
+  <div style="background:#fff7ed;border-left:4px solid var(--gold);border-radius:8px;padding:16px;margin-top:24px;font-size:0.88rem;">
+    <strong>💡 Tip:</strong> इस page का screenshot अपने phone में save करें। Emergency में internet न हो तो भी काम आएगा।
+  </div>
+</div>
+
+<footer><p><a href="index.html">← होमपेज</a> | Emergency in Chilua</p></footer>
+</body></html>

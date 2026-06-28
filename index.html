@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>चिलुआ गाँव | Chilua Village, Kushinagar, UP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Devanagari+Hindi&family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green:    #2d6a4f;
+    --green-lt: #40916c;
+    --gold:     #e9c46a;
+    --earth:    #a0522d;
+    --cream:    #fefae0;
+    --dark:     #1b1b1b;
+    --muted:    #6b7280;
+    --white:    #ffffff;
+    --card-bg:  #f9f6ee;
+    --border:   #d4c99a;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Inter', sans-serif; background: var(--cream); color: var(--dark); }
+
+  /* NAV */
+  nav {
+    background: var(--green);
+    padding: 0 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky; top: 0; z-index: 100;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .nav-brand { color: var(--gold); font-family: 'Playfair Display', serif; font-size: 1.3rem; padding: 14px 0; text-decoration: none; }
+  .nav-links { display: flex; flex-wrap: wrap; gap: 4px; padding: 8px 0; }
+  .nav-links a {
+    color: #d1fae5; font-size: 0.78rem; padding: 6px 10px;
+    border-radius: 4px; text-decoration: none; transition: background .2s;
+  }
+  .nav-links a:hover { background: var(--green-lt); color: var(--white); }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, var(--green) 0%, #1b4332 60%, #081c15 100%);
+    color: var(--white);
+    padding: 80px 24px 60px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .hero-icon { font-size: 4rem; margin-bottom: 12px; }
+  .hero h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 5vw, 3.5rem); color: var(--gold); }
+  .hero h2 { font-size: clamp(1rem, 2.5vw, 1.4rem); color: #a7f3d0; margin: 8px 0 24px; font-weight: 400; }
+  .hero-stats {
+    display: flex; flex-wrap: wrap; justify-content: center; gap: 24px; margin-top: 32px;
+  }
+  .stat { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.2); border-radius: 12px; padding: 16px 28px; }
+  .stat-num { font-size: 2rem; font-weight: 700; color: var(--gold); }
+  .stat-label { font-size: 0.78rem; color: #d1fae5; margin-top: 2px; }
+
+  /* TICKER */
+  .ticker { background: var(--gold); color: var(--dark); padding: 10px 0; overflow: hidden; }
+  .ticker-inner { display: flex; gap: 60px; animation: scroll 30s linear infinite; white-space: nowrap; font-size: 0.85rem; font-weight: 600; }
+  @keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* SECTIONS */
+  .section { padding: 60px 24px; max-width: 1200px; margin: 0 auto; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.8rem; color: var(--green); margin-bottom: 8px; }
+  .section-sub { color: var(--muted); margin-bottom: 32px; font-size: 0.9rem; }
+  .section-divider { border: none; border-top: 2px solid var(--border); margin: 0 0 32px; }
+
+  /* GRID */
+  .grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 20px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+
+  /* CARDS */
+  .card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+    text-decoration: none;
+    color: var(--dark);
+    transition: transform .2s, box-shadow .2s;
+    display: block;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.1); }
+  .card-icon { font-size: 2.2rem; margin-bottom: 12px; }
+  .card-title { font-weight: 700; font-size: 1rem; color: var(--green); margin-bottom: 6px; }
+  .card-desc { font-size: 0.82rem; color: var(--muted); line-height: 1.5; }
+
+  /* ALERT BOX */
+  .alert { background: #fff7ed; border-left: 4px solid var(--gold); border-radius: 8px; padding: 16px 20px; margin-bottom: 20px; font-size: 0.88rem; }
+  .alert strong { color: var(--earth); }
+
+  /* TABLE */
+  .info-table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+  .info-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+  .info-table td:first-child { font-weight: 600; color: var(--green); width: 40%; }
+  .info-table tr:last-child td { border-bottom: none; }
+
+  /* EMERGENCY */
+  .emergency-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 12px; }
+  .emergency-card { background: #fff1f2; border: 1px solid #fecdd3; border-radius: 10px; padding: 16px; text-align: center; }
+  .emergency-card .icon { font-size: 1.8rem; }
+  .emergency-card .label { font-size: 0.8rem; color: var(--muted); margin: 4px 0 2px; }
+  .emergency-card .number { font-size: 1.1rem; font-weight: 700; color: #be123c; }
+
+  /* NEWS */
+  .news-item { display: flex; gap: 16px; padding: 16px 0; border-bottom: 1px solid var(--border); }
+  .news-date { background: var(--green); color: var(--white); border-radius: 8px; padding: 8px 12px; text-align: center; min-width: 56px; }
+  .news-date .day { font-size: 1.4rem; font-weight: 700; line-height: 1; }
+  .news-date .mon { font-size: 0.7rem; text-transform: uppercase; }
+  .news-content h4 { font-size: 0.95rem; margin-bottom: 4px; }
+  .news-content p { font-size: 0.82rem; color: var(--muted); }
+
+  /* SCHEME */
+  .scheme-card { background: var(--white); border: 1px solid var(--border); border-radius: 10px; padding: 18px; }
+  .scheme-card h4 { color: var(--green); font-size: 0.95rem; margin-bottom: 6px; }
+  .scheme-card p { font-size: 0.8rem; color: var(--muted); line-height: 1.5; }
+  .badge { display: inline-block; background: #dcfce7; color: var(--green); font-size: 0.7rem; font-weight: 600; padding: 2px 8px; border-radius: 20px; margin-top: 8px; }
+
+  /* GALLERY PLACEHOLDER */
+  .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 12px; }
+  .gallery-ph { background: linear-gradient(135deg, #d1fae5, #a7f3d0); border-radius: 10px; height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--green); font-size: 0.8rem; gap: 8px; border: 2px dashed #6ee7b7; }
+  .gallery-ph .ph-icon { font-size: 2rem; }
+
+  /* FOOTER */
+  footer { background: var(--green); color: #a7f3d0; text-align: center; padding: 40px 24px; font-size: 0.85rem; }
+  footer h3 { font-family: 'Playfair Display', serif; color: var(--gold); font-size: 1.4rem; margin-bottom: 8px; }
+  footer .foot-links { display: flex; flex-wrap: wrap; justify-content: center; gap: 16px; margin: 16px 0; }
+  footer .foot-links a { color: #d1fae5; text-decoration: none; font-size: 0.8rem; }
+  footer .foot-links a:hover { color: var(--gold); }
+  footer p { font-size: 0.75rem; color: #6ee7b7; margin-top: 16px; }
+
+  /* COMING SOON BADGE */
+  .cs { display: inline-block; background: #fef3c7; color: #92400e; font-size: 0.7rem; padding: 2px 7px; border-radius: 10px; font-weight: 600; margin-left: 6px; }
+
+  @media(max-width: 600px) {
+    .nav-links { display: none; }
+    .hero { padding: 50px 16px 40px; }
+    .section { padding: 40px 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-brand" href="index.html">🏘️ चिलुआ गाँव</a>
+  <div class="nav-links">
+    <a href="about.html">📖 About</a>
+    <a href="panchayat.html">🏛️ Panchayat</a>
+    <a href="education.html">🏫 Education</a>
+    <a href="health.html">🏥 Health</a>
+    <a href="farmers.html">🌾 Farmers</a>
+    <a href="business.html">🛒 Business</a>
+    <a href="schemes.html">📋 Schemes</a>
+    <a href="news.html">📰 News</a>
+    <a href="events.html">📅 Events</a>
+    <a href="achievers.html">🏆 Achievers</a>
+    <a href="gallery.html">📸 Gallery</a>
+    <a href="emergency.html">🚨 Emergency</a>
+    <a href="map.html">🗺️ Map</a>
+    <a href="contact.html">📞 Contact</a>
+    <a href="chatbot.html">🤖 AI Help</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-icon">🌾</div>
+  <h1>चिलुआ गाँव</h1>
+  <h2>Hata Tehsil · Kushinagar District · Uttar Pradesh · PIN 274207</h2>
+  <div class="hero-stats">
+    <div class="stat"><div class="stat-num">1,562</div><div class="stat-label">जनसंख्या</div></div>
+    <div class="stat"><div class="stat-num">259</div><div class="stat-label">घर</div></div>
+    <div class="stat"><div class="stat-num">107</div><div class="stat-label">हेक्टेयर भूमि</div></div>
+    <div class="stat"><div class="stat-num">59.6%</div><div class="stat-label">साक्षरता दर</div></div>
+    <div class="stat"><div class="stat-num">43 km</div><div class="stat-label">Kushinagar से दूरी</div></div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>📢 ग्राम सभा की बैठक जल्द होगी — तारीख Panchayat Notice Board पर देखें</span>
+    <span>🌾 रबी फसल का मौसम शुरू — कृषि सलाह के लिए Farmers Corner देखें</span>
+    <span>💉 टीकाकरण अभियान — नजदीकी CHC पर जाएं</span>
+    <span>📢 ग्राम सभा की बैठक जल्द होगी — तारीख Panchayat Notice Board पर देखें</span>
+    <span>🌾 रबी फसल का मौसम शुरू — कृषि सलाह के लिए Farmers Corner देखें</span>
+    <span>💉 टीकाकरण अभियान — नजदीकी CHC पर जाएं</span>
+  </div>
+</div>
+
+<!-- QUICK LINKS -->
+<div class="section">
+  <h2 class="section-title">जल्दी जाएं</h2>
+  <p class="section-sub">सभी जानकारी एक जगह</p>
+  <hr class="section-divider">
+  <div class="grid-4">
+    <a class="card" href="panchayat.html"><div class="card-icon">🏛️</div><div class="card-title">Gram Panchayat</div><div class="card-desc">Gram Pradhan, Ward List, Minutes, Notices</div></a>
+    <a class="card" href="education.html"><div class="card-icon">🏫</div><div class="card-title">Schools</div><div class="card-desc">Primary, Junior High — Teachers, Facilities</div></a>
+    <a class="card" href="health.html"><div class="card-icon">🏥</div><div class="card-title">Health</div><div class="card-desc">ASHA Worker, Anganwadi, Vaccination, PHC</div></a>
+    <a class="card" href="farmers.html"><div class="card-icon">🌾</div><div class="card-title">Farmers Corner</div><div class="card-desc">Crop Calendar, Mandi Price, Irrigation, Seeds</div></a>
+    <a class="card" href="business.html"><div class="card-icon">🛒</div><div class="card-title">Business Directory</div><div class="card-desc">Shops, Medical, Dairy, Mechanic, CSC</div></a>
+    <a class="card" href="schemes.html"><div class="card-icon">📋</div><div class="card-title">Govt Schemes</div><div class="card-desc">PM Awas, Kisan Nidhi, SC/ST, Ration</div></a>
+    <a class="card" href="achievers.html"><div class="card-icon">🏆</div><div class="card-title">Achievers</div><div class="card-desc">Army, Engineers, Doctors, Teachers, Athletes</div></a>
+    <a class="card" href="emergency.html"><div class="card-icon">🚨</div><div class="card-title">Emergency</div><div class="card-desc">Police, Ambulance, Fire, Electricity</div></a>
+    <a class="card" href="news.html"><div class="card-icon">📰</div><div class="card-title">News & Notices</div><div class="card-desc">Road, Water, Bijli, Panchayat Updates</div></a>
+    <a class="card" href="events.html"><div class="card-icon">📅</div><div class="card-title">Events</div><div class="card-desc">Holi, Diwali, Chhath, Village Fair, Cricket</div></a>
+    <a class="card" href="gallery.html"><div class="card-icon">📸</div><div class="card-title">Gallery</div><div class="card-desc">Village Photos, Festivals, Drone View</div></a>
+    <a class="card" href="map.html"><div class="card-icon">🗺️</div><div class="card-title">Village Map</div><div class="card-desc">Schools, Temples, Handpumps, Roads, Shops</div></a>
+    <a class="card" href="blood.html"><div class="card-icon">🩸</div><div class="card-title">Blood Donors</div><div class="card-desc">Emergency blood contact list</div></a>
+    <a class="card" href="jobs.html"><div class="card-icon">💼</div><div class="card-title">Jobs</div><div class="card-desc">Sarkari & Private job updates</div></a>
+    <a class="card" href="documents.html"><div class="card-icon">📂</div><div class="card-title">Documents</div><div class="card-desc">Panchayat notices, Budget, Tenders</div></a>
+    <a class="card" href="complaint.html"><div class="card-icon">📝</div><div class="card-title">Complaint Portal</div><div class="card-desc">Report roads, lights, water, drainage issues</div></a>
+  </div>
+</div>
+
+<!-- VILLAGE OVERVIEW -->
+<div style="background: var(--card-bg); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+  <div class="section">
+    <h2 class="section-title">चिलुआ — एक नज़र में</h2>
+    <p class="section-sub">Census 2011 data</p>
+    <hr class="section-divider">
+    <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px; flex-wrap:wrap;">
+      <table class="info-table">
+        <tr><td>Gram Panchayat</td><td>Chilua</td></tr>
+        <tr><td>Tehsil</td><td>Hata</td></tr>
+        <tr><td>District</td><td>Kushinagar</td></tr>
+        <tr><td>State</td><td>Uttar Pradesh</td></tr>
+        <tr><td>PIN Code</td><td>274207</td></tr>
+        <tr><td>Village Code</td><td>188970</td></tr>
+        <tr><td>Area</td><td>107.73 hectares</td></tr>
+      </table>
+      <table class="info-table">
+        <tr><td>Total Population</td><td>1,562</td></tr>
+        <tr><td>Male / Female</td><td>792 / 770</td></tr>
+        <tr><td>Households</td><td>259</td></tr>
+        <tr><td>Sex Ratio</td><td>972 per 1000</td></tr>
+        <tr><td>SC Population</td><td>232</td></tr>
+        <tr><td>ST Population</td><td>160</td></tr>
+        <tr><td>Literacy Rate</td><td>59.67%</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- EMERGENCY CONTACTS -->
+<div class="section">
+  <h2 class="section-title">🚨 Emergency Contacts</h2>
+  <p class="section-sub">Important numbers — always available</p>
+  <hr class="section-divider">
+  <div class="emergency-grid">
+    <div class="emergency-card"><div class="icon">👮</div><div class="label">Police</div><div class="number">100</div></div>
+    <div class="emergency-card"><div class="icon">🚑</div><div class="label">Ambulance</div><div class="number">108</div></div>
+    <div class="emergency-card"><div class="icon">🔥</div><div class="label">Fire</div><div class="number">101</div></div>
+    <div class="emergency-card"><div class="icon">⚡</div><div class="label">Electricity</div><div class="number">1912</div></div>
+    <div class="emergency-card"><div class="icon">🏛️</div><div class="label">Gram Pradhan</div><div class="number">अपडेट करें</div></div>
+    <div class="emergency-card"><div class="icon">🐄</div><div class="label">Veterinary</div><div class="number">अपडेट करें</div></div>
+  </div>
+  <div style="margin-top:16px;">
+    <a class="card" href="emergency.html" style="display:inline-block; padding:10px 20px; background:var(--green); color:white; border-radius:8px; font-size:0.85rem; text-decoration:none;">सभी Emergency Contacts →</a>
+  </div>
+</div>
+
+<!-- LATEST NEWS -->
+<div style="background: var(--card-bg); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+  <div class="section">
+    <h2 class="section-title">📰 Latest News & Notices</h2>
+    <p class="section-sub">गाँव की ताज़ा खबर — यहाँ अपडेट होती रहेगी</p>
+    <hr class="section-divider">
+    <div class="alert"><strong>📢 Notice:</strong> Gram Sabha meeting notice — Date and agenda will be published by Gram Pradhan. Watch this space.</div>
+    <div class="news-item">
+      <div class="news-date"><div class="day">--</div><div class="mon">जल्द</div></div>
+      <div class="news-content"><h4>ग्राम पंचायत बैठक</h4><p>अगली बैठक की तारीख और एजेंडा यहाँ दिखेगा।</p></div>
+    </div>
+    <div class="news-item">
+      <div class="news-date"><div class="day">--</div><div class="mon">जल्द</div></div>
+      <div class="news-content"><h4>सड़क निर्माण अपडेट</h4><p>गाँव में सड़क मरम्मत की जानकारी यहाँ आएगी।</p></div>
+    </div>
+    <div class="news-item">
+      <div class="news-date"><div class="day">--</div><div class="mon">जल्द</div></div>
+      <div class="news-content"><h4>स्वास्थ्य शिविर</h4><p>नजदीकी CHC या Anganwadi में स्वास्थ्य शिविर की तारीख।</p></div>
+    </div>
+    <div style="margin-top:20px;"><a href="news.html" style="color:var(--green); font-weight:600; font-size:0.88rem;">सभी News देखें →</a></div>
+  </div>
+</div>
+
+<!-- GOVT SCHEMES PREVIEW -->
+<div class="section">
+  <h2 class="section-title">📋 Government Schemes</h2>
+  <p class="section-sub">सरकारी योजनाएं — आपके लिए</p>
+  <hr class="section-divider">
+  <div class="grid-3">
+    <div class="scheme-card"><h4>🏠 PM Awas Yojana (Gramin)</h4><p>गरीब परिवारों को पक्का मकान। पात्रता, दस्तावेज और आवेदन की पूरी जानकारी।</p><span class="badge">Housing</span></div>
+    <div class="scheme-card"><h4>🌾 PM Kisan Samman Nidhi</h4><p>किसानों को ₹6000/वर्ष। आवेदन कैसे करें, status कैसे चेक करें।</p><span class="badge">Agriculture</span></div>
+    <div class="scheme-card"><h4>🍚 Ration Card Scheme</h4><p>अंत्योदय और पात्र गृहस्थी — नाम जुड़वाने और सस्ता अनाज की जानकारी।</p><span class="badge">Food</span></div>
+    <div class="scheme-card"><h4>👩‍⚕️ Ayushman Bharat</h4><p>₹5 लाख तक मुफ्त इलाज। Card कैसे बनवाएं, कौन से हस्पताल शामिल हैं।</p><span class="badge">Health</span></div>
+    <div class="scheme-card"><h4>💡 PM Ujjwala Yojana</h4><p>BPL परिवारों को मुफ्त LPG कनेक्शन। आवेदन की प्रक्रिया।</p><span class="badge">Energy</span></div>
+    <div class="scheme-card"><h4>📚 Scholarship Schemes</h4><p>SC/ST/OBC छात्रों के लिए छात्रवृत्ति — UP Scholarship Portal की जानकारी।</p><span class="badge">Education</span></div>
+  </div>
+  <div style="margin-top:20px;"><a href="schemes.html" style="color:var(--green); font-weight:600; font-size:0.88rem;">सभी Schemes देखें →</a></div>
+</div>
+
+<!-- GALLERY PREVIEW -->
+<div style="background: var(--card-bg); border-top: 2px solid var(--border); border-bottom: 2px solid var(--border);">
+  <div class="section">
+    <h2 class="section-title">📸 Village Gallery</h2>
+    <p class="section-sub">अपने गाँव की तस्वीरें यहाँ जोड़ें</p>
+    <hr class="section-divider">
+    <div class="gallery-grid">
+      <div class="gallery-ph"><div class="ph-icon">🛕</div><span>Temple Photo</span></div>
+      <div class="gallery-ph"><div class="ph-icon">🌾</div><span>Kheti / Fields</span></div>
+      <div class="gallery-ph"><div class="ph-icon">🏫</div><span>School</span></div>
+      <div class="gallery-ph"><div class="ph-icon">🎉</div><span>Festival</span></div>
+      <div class="gallery-ph"><div class="ph-icon">🌅</div><span>Sunrise / Sunset</span></div>
+      <div class="gallery-ph"><div class="ph-icon">🚁</div><span>Drone View</span></div>
+    </div>
+    <div style="margin-top:20px;"><a href="gallery.html" style="color:var(--green); font-weight:600; font-size:0.88rem;">पूरी Gallery देखें →</a></div>
+  </div>
+</div>
+
+<!-- MAP -->
+<div class="section">
+  <h2 class="section-title">🗺️ Chilua on Map</h2>
+  <p class="section-sub">Kushinagar district, Uttar Pradesh</p>
+  <hr class="section-divider">
+  <iframe
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14318.0!2d83.8!3d26.77!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjbCsDQ2JzEyLjAiTiA4M8KwNDgnMDAuMCJF!5e0!3m2!1sen!2sin!4v1600000000000!5m2!1sen!2sin"
+    width="100%" height="350" style="border:0; border-radius:12px;" allowfullscreen="" loading="lazy">
+  </iframe>
+  <div style="margin-top:12px;"><a href="map.html" style="color:var(--green); font-weight:600; font-size:0.88rem;">Interactive Village Map देखें →</a></div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <h3>🏘️ चिलुआ गाँव</h3>
+  <p>Hata Tehsil · Kushinagar · Uttar Pradesh · 274207</p>
+  <div class="foot-links">
+    <a href="about.html">About</a>
+    <a href="panchayat.html">Panchayat</a>
+    <a href="schemes.html">Schemes</a>
+    <a href="emergency.html">Emergency</a>
+    <a href="news.html">News</a>
+    <a href="contact.html">Contact</a>
+    <a href="complaint.html">Complaint</a>
+    <a href="blood.html">Blood Donors</a>
+  </div>
+  <p>Made with ❤️ for Chilua Village · GitHub Pages pe Free Hosting</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Complaint Portal | चिलुआ गाँव</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#2d6a4f;--gold:#e9c46a;--cream:#fefae0;--dark:#1b1b1b;--muted:#6b7280;--card:#f9f6ee;--border:#d4c99a;--red:#dc2626;--yellow:#d97706;--blue:#2563eb;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+  .nb{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.3rem;padding:14px 0;text-decoration:none;}
+  .nl{display:flex;flex-wrap:wrap;gap:4px;padding:8px 0;}
+  .nl a{color:#d1fae5;font-size:0.78rem;padding:6px 10px;border-radius:4px;text-decoration:none;}
+  .nl a:hover{background:#40916c;}
+  .hero{background:linear-gradient(135deg,#1e3a5f,#1b4332);color:white;padding:60px 24px;text-align:center;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);}
+  .hero p{color:#a7f3d0;margin-top:8px;}
+  .wrap{max-width:900px;margin:0 auto;padding:40px 24px;}
+  /* TABS */
+  .tabs{display:flex;gap:0;margin-bottom:32px;border-bottom:2px solid var(--border);}
+  .tab{padding:12px 24px;font-size:0.88rem;font-weight:600;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .2s;}
+  .tab.active{color:var(--green);border-bottom-color:var(--green);}
+  .tab-content{display:none;}
+  .tab-content.active{display:block;}
+  /* FORM */
+  .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .form-group{display:flex;flex-direction:column;gap:6px;margin-bottom:16px;}
+  .form-group.full{grid-column:1/-1;}
+  label{font-size:0.82rem;font-weight:600;color:var(--green);}
+  input,select,textarea{padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;background:white;font-family:'Inter',sans-serif;color:var(--dark);transition:border .2s;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--green);}
+  textarea{resize:vertical;min-height:90px;}
+  .cat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-bottom:16px;}
+  .cat-btn{background:var(--card);border:2px solid var(--border);border-radius:10px;padding:14px 10px;text-align:center;cursor:pointer;transition:all .2s;font-size:0.82rem;color:var(--dark);}
+  .cat-btn:hover,.cat-btn.selected{background:#dcfce7;border-color:var(--green);color:var(--green);font-weight:600;}
+  .cat-btn .ci{font-size:1.6rem;display:block;margin-bottom:4px;}
+  .submit-btn{background:var(--green);color:white;border:none;padding:13px 32px;border-radius:8px;font-size:0.92rem;font-weight:700;cursor:pointer;width:100%;margin-top:8px;transition:background .2s;}
+  .submit-btn:hover{background:#40916c;}
+  /* STATUS BADGE */
+  .badge{display:inline-flex;align-items:center;gap:5px;padding:3px 10px;border-radius:20px;font-size:0.72rem;font-weight:700;}
+  .badge.pending{background:#fef3c7;color:#92400e;}
+  .badge.progress{background:#dbeafe;color:#1d4ed8;}
+  .badge.resolved{background:#dcfce7;color:#166534;}
+  /* COMPLAINT CARDS */
+  .complaint-card{background:white;border:1px solid var(--border);border-radius:12px;padding:20px;margin-bottom:14px;position:relative;}
+  .complaint-card .c-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:10px;}
+  .complaint-card h4{font-size:0.95rem;color:var(--dark);}
+  .complaint-card .c-meta{font-size:0.78rem;color:var(--muted);margin-top:4px;}
+  .complaint-card .c-desc{font-size:0.85rem;color:#374151;margin-bottom:10px;line-height:1.5;}
+  .progress-bar{height:6px;background:#e5e7eb;border-radius:3px;overflow:hidden;margin-top:10px;}
+  .progress-fill{height:100%;border-radius:3px;background:var(--green);transition:width .4s;}
+  .c-id{font-size:0.72rem;color:var(--muted);font-family:monospace;}
+  /* SEARCH */
+  .search-box{display:flex;gap:10px;margin-bottom:24px;}
+  .search-box input{flex:1;}
+  .search-box button{background:var(--green);color:white;border:none;padding:10px 20px;border-radius:8px;cursor:pointer;font-size:0.88rem;font-weight:600;}
+  /* STATS */
+  .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px;}
+  .stat-box{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px;text-align:center;}
+  .stat-box .sn{font-size:1.8rem;font-weight:800;color:var(--green);}
+  .stat-box .sl{font-size:0.72rem;color:var(--muted);margin-top:2px;}
+  /* SUCCESS */
+  .success-msg{background:#dcfce7;border:1px solid #86efac;border-radius:12px;padding:24px;text-align:center;display:none;}
+  .success-msg .big{font-size:3rem;}
+  .success-msg h3{color:#166534;margin:8px 0 4px;}
+  .success-msg p{color:#166534;font-size:0.88rem;}
+  .success-msg .ticket{background:white;border:2px dashed #86efac;border-radius:8px;padding:12px;margin-top:12px;font-family:monospace;font-size:1.1rem;color:var(--green);font-weight:700;}
+  @media(max-width:600px){.form-grid{grid-template-columns:1fr;}.stats-row{grid-template-columns:1fr 1fr;}.tabs{overflow-x:auto;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nb" href="index.html">🏘️ चिलुआ गाँव</a>
+  <div class="nl">
+    <a href="index.html">🏠 Home</a>
+    <a href="panchayat.html">🏛️ Panchayat</a>
+    <a href="emergency.html">🚨 Emergency</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>📝 Complaint Portal</h1>
+  <p>गाँव की समस्या यहाँ दर्ज करें — Gram Pradhan तक पहुँचाएंगे</p>
+</div>
+
+<div class="wrap">
+
+  <!-- STATS -->
+  <div class="stats-row">
+    <div class="stat-box"><div class="sn" id="totalCount">0</div><div class="sl">Total Complaints</div></div>
+    <div class="stat-box"><div class="sn" id="pendingCount" style="color:#d97706;">0</div><div class="sl">Pending</div></div>
+    <div class="stat-box"><div class="sn" id="progressCount" style="color:#2563eb;">0</div><div class="sl">In Progress</div></div>
+    <div class="stat-box"><div class="sn" id="resolvedCount" style="color:#16a34a;">0</div><div class="sl">Resolved</div></div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('submit')">✍️ Submit Complaint</button>
+    <button class="tab" onclick="switchTab('track')">🔍 Track Complaint</button>
+    <button class="tab" onclick="switchTab('list')">📋 All Complaints</button>
+  </div>
+
+  <!-- SUBMIT TAB -->
+  <div class="tab-content active" id="tab-submit">
+    <div id="formArea">
+      <p style="font-size:0.88rem;color:var(--muted);margin-bottom:20px;">नीचे दी गई Category चुनें और समस्या बताएं। आपकी शिकायत Gram Pradhan को पहुँचाई जाएगी।</p>
+
+      <label style="display:block;margin-bottom:10px;">समस्या की Category चुनें:</label>
+      <div class="cat-grid" id="catGrid">
+        <div class="cat-btn" onclick="selectCat(this,'road')"><span class="ci">🛣️</span>सड़क / Road</div>
+        <div class="cat-btn" onclick="selectCat(this,'water')"><span class="ci">💧</span>पानी / Water</div>
+        <div class="cat-btn" onclick="selectCat(this,'light')"><span class="ci">💡</span>बिजली / Light</div>
+        <div class="cat-btn" onclick="selectCat(this,'drain')"><span class="ci">🚰</span>नाली / Drain</div>
+        <div class="cat-btn" onclick="selectCat(this,'garbage')"><span class="ci">🗑️</span>कचरा / Garbage</div>
+        <div class="cat-btn" onclick="selectCat(this,'handpump')"><span class="ci">🔧</span>Handpump</div>
+        <div class="cat-btn" onclick="selectCat(this,'school')"><span class="ci">🏫</span>School</div>
+        <div class="cat-btn" onclick="selectCat(this,'other')"><span class="ci">📌</span>Other</div>
+      </div>
+
+      <div class="form-grid">
+        <div class="form-group">
+          <label>आपका नाम *</label>
+          <input type="text" id="name" placeholder="पूरा नाम लिखें">
+        </div>
+        <div class="form-group">
+          <label>मोबाइल नंबर *</label>
+          <input type="tel" id="phone" placeholder="10 अंक का नंबर" maxlength="10">
+        </div>
+        <div class="form-group">
+          <label>वार्ड / टोला</label>
+          <select id="ward">
+            <option value="">-- वार्ड चुनें --</option>
+            <option>वार्ड 1</option>
+            <option>वार्ड 2</option>
+            <option>वार्ड 3</option>
+            <option>वार्ड 4</option>
+            <option>पूरा गाँव</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>गंभीरता / Priority</label>
+          <select id="priority">
+            <option value="low">🟢 कम जरूरी</option>
+            <option value="medium" selected>🟡 जरूरी</option>
+            <option value="high">🔴 बहुत जरूरी</option>
+          </select>
+        </div>
+        <div class="form-group full">
+          <label>समस्या का विवरण *</label>
+          <textarea id="desc" placeholder="समस्या को विस्तार से लिखें — जैसे: वार्ड 2 में मुख्य सड़क पर बड़ा गड्ढा है जिससे दुर्घटना का खतरा है।"></textarea>
+        </div>
+        <div class="form-group full">
+          <label>स्थान / Location (Optional)</label>
+          <input type="text" id="location" placeholder="जैसे: मंदिर के पास, स्कूल रोड पर...">
+        </div>
+      </div>
+      <button class="submit-btn" onclick="submitComplaint()">📤 शिकायत दर्ज करें</button>
+    </div>
+
+    <div class="success-msg" id="successMsg">
+      <div class="big">✅</div>
+      <h3>शिकायत दर्ज हो गई!</h3>
+      <p>आपकी शिकायत Gram Pradhan को भेज दी गई है। Ticket Number से Status Track करें।</p>
+      <div class="ticket" id="ticketDisplay">Ticket: CHI-XXXX</div>
+      <button onclick="resetForm()" style="margin-top:16px;background:var(--green);color:white;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;font-weight:600;">नई शिकायत दर्ज करें</button>
+    </div>
+  </div>
+
+  <!-- TRACK TAB -->
+  <div class="tab-content" id="tab-track">
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:20px;">Ticket Number डालें जो Submit करने पर मिला था।</p>
+    <div class="search-box">
+      <input type="text" id="ticketInput" placeholder="जैसे: CHI-1234" oninput="this.value=this.value.toUpperCase()">
+      <button onclick="trackTicket()">🔍 Track</button>
+    </div>
+    <div id="trackResult"></div>
+  </div>
+
+  <!-- LIST TAB -->
+  <div class="tab-content" id="tab-list">
+    <p style="font-size:0.88rem;color:var(--muted);margin-bottom:16px;">गाँव में दर्ज सभी शिकायतें — Gram Pradhan देख सकते हैं</p>
+    <div class="search-box">
+      <input type="text" id="filterInput" placeholder="Category या नाम से खोजें..." oninput="renderList()">
+      <select id="filterStatus" onchange="renderList()" style="padding:10px 14px;border:1.5px solid var(--border);border-radius:8px;font-size:0.88rem;">
+        <option value="">सभी</option>
+        <option value="pending">Pending</option>
+        <option value="progress">In Progress</option>
+        <option value="resolved">Resolved</option>
+      </select>
+    </div>
+    <div id="complaintList"></div>
+  </div>
+
+</div>
+
+<script>
+// ── Storage helpers ──
+const STORE_KEY = 'chilua_complaints';
+function load(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'[]');}catch{return[];}}
+function save(d){localStorage.setItem(STORE_KEY,JSON.stringify(d));}
+
+// ── State ──
+let selectedCat = '';
+let complaints = load();
+
+// Pre-populate with 3 demo entries if empty
+if(complaints.length===0){
+  complaints = [
+    {id:'CHI-1001',name:'रामप्रसाद यादव',phone:'98XXXXXXXX',ward:'वार्ड 2',cat:'road',catLabel:'सड़क',priority:'high',desc:'वार्ड 2 में स्कूल के पास सड़क पर बड़ा गड्ढा है। बारिश में पानी भर जाता है।',location:'स्कूल के पास',status:'progress',date:'2026-06-10',progress:50},
+    {id:'CHI-1002',name:'सुनीता देवी',phone:'97XXXXXXXX',ward:'वार्ड 1',cat:'water',catLabel:'पानी',priority:'medium',desc:'वार्ड 1 में handpump खराब है। 5 दिन से पानी नहीं आ रहा।',location:'वार्ड 1 का पुराना हैंडपंप',status:'pending',date:'2026-06-18',progress:0},
+    {id:'CHI-1003',name:'महेश कुमार',phone:'96XXXXXXXX',ward:'वार्ड 3',cat:'light',catLabel:'बिजली',priority:'low',desc:'मुख्य चौराहे की स्ट्रीट लाइट 2 हफ्ते से बंद है।',location:'मुख्य चौराहा',status:'resolved',date:'2026-06-01',progress:100},
+  ];
+  save(complaints);
+}
+
+// ── Category Select ──
+function selectCat(el,val){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedCat = val;
+}
+
+// ── Tab Switch ──
+function switchTab(t){
+  document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.querySelector(`#tab-${t}`).classList.add('active');
+  event.target.classList.add('active');
+  if(t==='list') renderList();
+  updateStats();
+}
+
+// ── Submit ──
+function submitComplaint(){
+  const name=document.getElementById('name').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const desc=document.getElementById('desc').value.trim();
+  if(!name||!phone||!desc||!selectedCat){
+    alert('कृपया नाम, मोबाइल, Category और विवरण जरूर भरें।');return;
+  }
+  if(phone.length!==10||isNaN(phone)){alert('सही 10 अंक का मोबाइल नंबर डालें।');return;}
+
+  const catLabels={road:'सड़क',water:'पानी',light:'बिजली',drain:'नाली',garbage:'कचरा',handpump:'Handpump',school:'School',other:'Other'};
+  const id='CHI-'+Math.floor(1000+Math.random()*9000);
+  const c={
+    id,name,phone,
+    ward:document.getElementById('ward').value||'अज्ञात',
+    cat:selectedCat,catLabel:catLabels[selectedCat],
+    priority:document.getElementById('priority').value,
+    desc,
+    location:document.getElementById('location').value,
+    status:'pending',
+    date:new Date().toISOString().split('T')[0],
+    progress:0
+  };
+  complaints.unshift(c);
+  save(complaints);
+  updateStats();
+
+  document.getElementById('formArea').style.display='none';
+  document.getElementById('successMsg').style.display='block';
+  document.getElementById('ticketDisplay').textContent='Ticket Number: '+id;
+
+  // WhatsApp alert to Pradhan (template)
+  const msg=`🚨 *नई शिकायत — चिलुआ गाँव*\n\nTicket: ${id}\nनाम: ${name}\nCategory: ${catLabels[selectedCat]}\nवार्ड: ${c.ward}\nविवरण: ${desc}\nDate: ${c.date}`;
+  console.log('WhatsApp msg (send to Pradhan number):', msg);
+}
+
+function resetForm(){
+  document.getElementById('formArea').style.display='block';
+  document.getElementById('successMsg').style.display='none';
+  document.getElementById('name').value='';
+  document.getElementById('phone').value='';
+  document.getElementById('desc').value='';
+  document.getElementById('location').value='';
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('selected'));
+  selectedCat='';
+}
+
+// ── Track ──
+function trackTicket(){
+  const id=document.getElementById('ticketInput').value.trim();
+  const c=complaints.find(x=>x.id===id);
+  const el=document.getElementById('trackResult');
+  if(!c){el.innerHTML='<div style="background:#fef2f2;border:1px solid #fecaca;border-radius:10px;padding:20px;text-align:center;color:#991b1b;font-size:0.88rem;">❌ Ticket नहीं मिला। सही Ticket Number डालें।</div>';return;}
+  el.innerHTML=renderCard(c,true);
+}
+
+// ── List ──
+function renderList(){
+  const q=document.getElementById('filterInput').value.toLowerCase();
+  const s=document.getElementById('filterStatus').value;
+  const filtered=complaints.filter(c=>{
+    const matchQ=!q||c.name.toLowerCase().includes(q)||c.catLabel.toLowerCase().includes(q)||c.desc.toLowerCase().includes(q);
+    const matchS=!s||c.status===s;
+    return matchQ&&matchS;
+  });
+  document.getElementById('complaintList').innerHTML=filtered.length?filtered.map(c=>renderCard(c,false)).join(''):'<div style="text-align:center;color:var(--muted);padding:40px;">कोई शिकायत नहीं मिली</div>';
+}
+
+// ── Card HTML ──
+function renderCard(c,showActions){
+  const badges={pending:'<span class="badge pending">⏳ Pending</span>',progress:'<span class="badge progress">🔄 In Progress</span>',resolved:'<span class="badge resolved">✅ Resolved</span>'};
+  const pri={high:'🔴',medium:'🟡',low:'🟢'};
+  const actions=showActions?`
+    <div style="display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;">
+      <button onclick="updateStatus('${c.id}','pending')" style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:${c.status==='pending'?'#fef3c7':'white'};cursor:pointer;font-size:0.78rem;">⏳ Pending</button>
+      <button onclick="updateStatus('${c.id}','progress')" style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:${c.status==='progress'?'#dbeafe':'white'};cursor:pointer;font-size:0.78rem;">🔄 In Progress</button>
+      <button onclick="updateStatus('${c.id}','resolved')" style="padding:6px 12px;border:1px solid var(--border);border-radius:6px;background:${c.status==='resolved'?'#dcfce7':'white'};cursor:pointer;font-size:0.78rem;">✅ Resolved</button>
+    </div>`:'';
+  return `<div class="complaint-card">
+    <div class="c-head">
+      <div>
+        <h4>${pri[c.priority]||'🟡'} ${c.catLabel} — ${c.ward}</h4>
+        <div class="c-meta">👤 ${c.name} &nbsp;|&nbsp; 📅 ${c.date} &nbsp;|&nbsp; ${c.location?'📍 '+c.location:''}</div>
+      </div>
+      <div style="text-align:right">${badges[c.status]||''}<br><span class="c-id">${c.id}</span></div>
+    </div>
+    <div class="c-desc">${c.desc}</div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${c.progress}%"></div></div>
+    <div style="font-size:0.72rem;color:var(--muted);margin-top:4px;">Progress: ${c.progress}%</div>
+    ${actions}
+  </div>`;
+}
+
+// ── Update Status (Pradhan view) ──
+function updateStatus(id,status){
+  const c=complaints.find(x=>x.id===id);
+  if(!c) return;
+  c.status=status;
+  c.progress=status==='resolved'?100:status==='progress'?50:0;
+  save(complaints);
+  trackTicket();
+  updateStats();
+}
+
+// ── Stats ──
+function updateStats(){
+  complaints=load();
+  document.getElementById('totalCount').textContent=complaints.length;
+  document.getElementById('pendingCount').textContent=complaints.filter(c=>c.status==='pending').length;
+  document.getElementById('progressCount').textContent=complaints.filter(c=>c.status==='progress').length;
+  document.getElementById('resolvedCount').textContent=complaints.filter(c=>c.status==='resolved').length;
+}
+updateStats();
+</script>
+
+<footer style="background:var(--green);color:#a7f3d0;text-align:center;padding:30px 24px;font-size:0.82rem;margin-top:40px;">
+  <p><a href="index.html" style="color:var(--gold);text-decoration:none;">← होमपेज</a> &nbsp;|&nbsp; Complaint Portal — चिलुआ गाँव</p>
+</footer>
+</body></html>

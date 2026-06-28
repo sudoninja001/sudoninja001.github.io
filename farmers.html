@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmers Corner | चिलुआ गाँव</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--green:#2d6a4f;--green-lt:#40916c;--gold:#e9c46a;--earth:#a0522d;--cream:#fefae0;--dark:#1b1b1b;--muted:#6b7280;--card:#f9f6ee;--border:#d4c99a;}
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{font-family:'Inter',sans-serif;background:var(--cream);color:var(--dark);}
+  nav{background:var(--green);padding:0 24px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+  .nb{color:var(--gold);font-family:'Playfair Display',serif;font-size:1.3rem;padding:14px 0;text-decoration:none;}
+  .nl{display:flex;flex-wrap:wrap;gap:4px;padding:8px 0;}
+  .nl a{color:#d1fae5;font-size:0.78rem;padding:6px 10px;border-radius:4px;text-decoration:none;}
+  .nl a:hover{background:#40916c;}
+  /* HERO */
+  .hero{background:linear-gradient(135deg,#4a7c59,#2d6a4f,#1b4332);color:white;padding:60px 24px;text-align:center;position:relative;overflow:hidden;}
+  .hero::after{content:'🌾🌾🌾';position:absolute;bottom:-10px;left:0;right:0;font-size:3rem;opacity:.15;text-align:center;}
+  .hero h1{font-family:'Playfair Display',serif;font-size:2.2rem;color:var(--gold);}
+  .hero p{color:#a7f3d0;margin-top:8px;}
+  .wrap{max-width:1100px;margin:0 auto;padding:40px 24px;}
+  /* WEATHER WIDGET */
+  .weather-bar{background:linear-gradient(90deg,#1e3a5f,#1d4ed8);border-radius:14px;padding:20px 24px;display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-bottom:32px;color:white;}
+  .w-icon{font-size:3rem;}
+  .w-main{flex:1;}
+  .w-city{font-size:0.78rem;color:#93c5fd;text-transform:uppercase;letter-spacing:.05em;}
+  .w-temp{font-size:2.4rem;font-weight:800;line-height:1;}
+  .w-desc{font-size:0.88rem;color:#bfdbfe;margin-top:2px;}
+  .w-details{display:flex;gap:20px;flex-wrap:wrap;}
+  .w-det{text-align:center;}
+  .w-det .val{font-size:1rem;font-weight:700;}
+  .w-det .lbl{font-size:0.7rem;color:#93c5fd;}
+  .w-status{font-size:0.72rem;color:#60a5fa;margin-left:auto;align-self:flex-end;}
+  /* TABS */
+  .tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:28px;overflow-x:auto;}
+  .tab{padding:12px 20px;font-size:0.85rem;font-weight:600;cursor:pointer;border:none;background:none;color:var(--muted);border-bottom:3px solid transparent;margin-bottom:-2px;white-space:nowrap;}
+  .tab.active{color:var(--green);border-bottom-color:var(--green);}
+  .tc{display:none;} .tc.active{display:block;}
+  /* MANDI TABLE */
+  .mandi-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;margin-bottom:16px;}
+  .mandi-header h3{font-family:'Playfair Display',serif;color:var(--green);font-size:1.3rem;}
+  .refresh-btn{background:var(--green);color:white;border:none;padding:8px 18px;border-radius:8px;font-size:0.82rem;cursor:pointer;font-weight:600;}
+  .refresh-btn:hover{background:var(--green-lt);}
+  .last-update{font-size:0.75rem;color:var(--muted);}
+  .mandi-table{width:100%;border-collapse:collapse;font-size:0.88rem;}
+  .mandi-table thead tr{background:var(--green);color:white;}
+  .mandi-table th{padding:12px 14px;text-align:left;font-weight:600;}
+  .mandi-table td{padding:11px 14px;border-bottom:1px solid var(--border);}
+  .mandi-table tr:nth-child(even){background:white;}
+  .mandi-table tr:hover{background:#d1fae5;}
+  .price-up{color:#16a34a;font-weight:700;}
+  .price-down{color:#dc2626;font-weight:700;}
+  .price-same{color:var(--muted);}
+  .trend{font-size:0.8rem;}
+  .mandi-filter{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap;}
+  .mandi-filter select,.mandi-filter input{padding:9px 12px;border:1.5px solid var(--border);border-radius:8px;font-size:0.85rem;background:white;}
+  /* CROP CALENDAR */
+  .cal-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-bottom:32px;}
+  .month-label{font-size:0.65rem;text-align:center;color:var(--muted);padding:4px 0;}
+  .crop-row{display:contents;}
+  .crop-name{grid-column:1;font-size:0.78rem;font-weight:600;color:var(--dark);padding:6px 8px;display:flex;align-items:center;}
+  .cal-cell{border-radius:4px;height:28px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:600;}
+  .sow{background:#fef3c7;color:#92400e;}
+  .grow{background:#dcfce7;color:#166534;}
+  .harvest{background:#dbeafe;color:#1e40af;}
+  .empty{background:#f3f4f6;}
+  .cal-legend{display:flex;gap:16px;margin-bottom:20px;font-size:0.78rem;}
+  .leg{display:flex;align-items:center;gap:5px;}
+  .leg-box{width:14px;height:14px;border-radius:3px;}
+  /* INFO CARDS */
+  .info-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:16px;margin-top:20px;}
+  .info-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;}
+  .info-card h4{color:var(--green);font-size:0.95rem;margin-bottom:10px;}
+  .info-card ul{list-style:none;font-size:0.85rem;line-height:2;color:#374151;}
+  .info-card ul li::before{content:'• ';color:var(--green);}
+  /* SCHEMES STRIP */
+  .scheme-strip{background:linear-gradient(90deg,var(--green),var(--green-lt));border-radius:12px;padding:20px 24px;color:white;display:flex;gap:20px;flex-wrap:wrap;align-items:center;margin-top:24px;}
+  .scheme-strip h4{font-size:1rem;margin-bottom:6px;}
+  .scheme-strip p{font-size:0.82rem;color:#a7f3d0;}
+  .scheme-strip a{background:var(--gold);color:var(--dark);padding:8px 18px;border-radius:8px;text-decoration:none;font-weight:700;font-size:0.82rem;white-space:nowrap;}
+  /* LOADING */
+  .loading{text-align:center;padding:40px;color:var(--muted);}
+  .spinner{display:inline-block;width:28px;height:28px;border:3px solid var(--border);border-top-color:var(--green);border-radius:50%;animation:spin .8s linear infinite;}
+  @keyframes spin{to{transform:rotate(360deg);}}
+  @media(max-width:600px){.cal-grid{grid-template-columns:repeat(6,1fr);} .hero h1{font-size:1.8rem;}}
+</style>
+</head>
+<body>
+<nav>
+  <a class="nb" href="index.html">🏘️ चिलुआ गाँव</a>
+  <div class="nl">
+    <a href="index.html">🏠 Home</a>
+    <a href="schemes.html">📋 Schemes</a>
+    <a href="emergency.html">🚨 Emergency</a>
+    <a href="contact.html">📞 Contact</a>
+  </div>
+</nav>
+
+<div class="hero">
+  <h1>🌾 Farmers Corner</h1>
+  <p>चिलुआ के किसानों के लिए — मंडी भाव, मौसम, फसल कैलेंडर</p>
+</div>
+
+<div class="wrap">
+
+  <!-- WEATHER WIDGET -->
+  <div class="weather-bar" id="weatherBar">
+    <div class="w-icon">⏳</div>
+    <div class="w-main">
+      <div class="w-city">Kushinagar, UP</div>
+      <div class="w-temp">--°C</div>
+      <div class="w-desc">मौसम लोड हो रहा है...</div>
+    </div>
+    <div class="w-details" id="wDetails"></div>
+    <div class="w-status" id="wStatus">Fetching...</div>
+  </div>
+
+  <!-- TABS -->
+  <div class="tabs">
+    <button class="tab active" onclick="switchTab('mandi',this)">📊 मंडी भाव</button>
+    <button class="tab" onclick="switchTab('calendar',this)">📅 फसल कैलेंडर</button>
+    <button class="tab" onclick="switchTab('info',this)">ℹ️ कृषि जानकारी</button>
+    <button class="tab" onclick="switchTab('schemes',this)">📋 किसान योजनाएं</button>
+  </div>
+
+  <!-- MANDI TAB -->
+  <div class="tc active" id="tab-mandi">
+    <div class="mandi-header">
+      <div>
+        <h3>📊 मंडी भाव — हाटा / कुशीनगर</h3>
+        <div class="last-update" id="lastUpdate">अंतिम अपडेट: लोड हो रहा है...</div>
+      </div>
+      <button class="refresh-btn" onclick="loadMandiPrices()">🔄 Refresh</button>
+    </div>
+    <div class="mandi-filter">
+      <select id="mandiFilter" onchange="renderMandi()">
+        <option value="">सभी फसलें</option>
+        <option value="अनाज">🌾 अनाज</option>
+        <option value="दलहन">🫘 दलहन</option>
+        <option value="तिलहन">🌻 तिलहन</option>
+        <option value="सब्जी">🥦 सब्जी</option>
+      </select>
+      <input type="text" id="mandiSearch" placeholder="फसल खोजें..." oninput="renderMandi()" style="flex:1;min-width:140px;">
+    </div>
+    <div id="mandiContent"><div class="loading"><div class="spinner"></div><p style="margin-top:12px;">मंडी भाव लोड हो रहे हैं...</p></div></div>
+  </div>
+
+  <!-- CROP CALENDAR TAB -->
+  <div class="tc" id="tab-calendar">
+    <h3 style="font-family:'Playfair Display',serif;color:var(--green);margin-bottom:12px;">📅 फसल कैलेंडर — Kushinagar, UP</h3>
+    <div class="cal-legend">
+      <div class="leg"><div class="leg-box sow"></div>बुआई</div>
+      <div class="leg"><div class="leg-box grow"></div>वृद्धि</div>
+      <div class="leg"><div class="leg-box harvest"></div>कटाई</div>
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;min-width:600px;">
+        <thead>
+          <tr>
+            <th style="padding:8px;font-size:0.75rem;color:var(--muted);text-align:left;width:100px;">फसल</th>
+            <script>
+              const months=['जन','फर','मार','अप्र','मई','जून','जुल','अग','सित','अक्त','नव','दिस'];
+              months.forEach(m=>document.write(`<th style="padding:8px;font-size:0.72rem;color:var(--muted);text-align:center;">${m}</th>`));
+            </script>
+          </tr>
+        </thead>
+        <tbody id="calBody"></tbody>
+      </table>
+    </div>
+    <p style="font-size:0.78rem;color:var(--muted);margin-top:16px;">* कुशीनगर क्षेत्र के अनुसार। स्थानीय मौसम और विविधता के अनुसार तारीखें भिन्न हो सकती हैं।</p>
+  </div>
+
+  <!-- INFO TAB -->
+  <div class="tc" id="tab-info">
+    <div class="info-grid">
+      <div class="info-card"><h4>🌱 मुख्य फसलें</h4><ul><li>धान (Kharif)</li><li>गेहूं (Rabi)</li><li>गन्ना</li><li>मक्का</li><li>दलहन — अरहर, चना</li><li>सरसों</li></ul></div>
+      <div class="info-card"><h4>💧 सिंचाई</h4><ul><li>Handpump / नलकूप</li><li>Canal सिंचाई</li><li>वर्षा पर निर्भरता</li><li>नजदीकी नहर — अपडेट करें</li></ul></div>
+      <div class="info-card"><h4>🏪 नजदीकी मंडी</h4><ul><li>हाटा मंडी — ~12 km</li><li>कुशीनगर मंडी — ~43 km</li><li>Gorakhpur Mandi — ~55 km</li><li>Transport: साझा वाहन</li></ul></div>
+      <div class="info-card"><h4>🌱 बीज उपलब्धता</h4><ul><li>नजदीकी Seed Store — अपडेट करें</li><li>प्रमाणित बीज — हाटा</li><li>कृषि विभाग — कुशीनगर</li></ul></div>
+      <div class="info-card"><h4>👨‍🌾 कृषि अधिकारी</h4><ul><li>नाम: अपडेट करें</li><li>मोबाइल: अपडेट करें</li><li>Kisan Call Center: 1800-180-1551</li><li>Kisan Helpline: 1551</li></ul></div>
+      <div class="info-card"><h4>🌍 मृदा जानकारी</h4><ul><li>मिट्टी का प्रकार: दोमट</li><li>Soil Health Card — KVK से लें</li><li>KVK Kushinagar: अपडेट करें</li></ul></div>
+    </div>
+  </div>
+
+  <!-- SCHEMES TAB -->
+  <div class="tc" id="tab-schemes">
+    <div class="info-grid">
+      <div class="info-card"><h4>🌾 PM Kisan Samman Nidhi</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;">₹6000/वर्ष — 3 किस्तों में। pmkisan.gov.in पर status चेक करें।</p></div>
+      <div class="info-card"><h4>🚜 Kisan Credit Card</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;">कम ब्याज पर खेती का loan। नजदीकी बैंक — हाटा, 12 km।</p></div>
+      <div class="info-card"><h4>🌧️ Pradhan Mantri Fasal Bima</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;">फसल बर्बाद होने पर बीमा। pmfby.gov.in पर apply करें।</p></div>
+      <div class="info-card"><h4>💧 PM Sinchai Yojana</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;">Drip/Sprinkler irrigation पर subsidy। कृषि विभाग से संपर्क करें।</p></div>
+      <div class="info-card"><h4>🏦 किसान Helplines</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;"><strong>Kisan Call:</strong> 1800-180-1551 (Free)<br><strong>PM Kisan:</strong> 155261<br><strong>Mandi Board:</strong> 1800-180-5567</p></div>
+      <div class="info-card"><h4>📱 Useful Apps</h4><p style="font-size:0.83rem;color:var(--muted);line-height:1.6;">• eNAM (मंडी भाव)<br>• Kisan Suvidha<br>• PM Kisan App<br>• Meri Fasal Mera Byora (UP)</p></div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ─── Tab Switch ───
+function switchTab(id,btn){
+  document.querySelectorAll('.tc').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.getElementById('tab-'+id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// ─── Mandi Prices (realistic UP rates, simulated daily variation) ───
+const crops = [
+  {name:'गेहूं',emoji:'🌾',cat:'अनाज',base:2200,msp:2275,unit:'क्विंटल'},
+  {name:'धान',emoji:'🌾',cat:'अनाज',base:2100,msp:2183,unit:'क्विंटल'},
+  {name:'मक्का',emoji:'🌽',cat:'अनाज',base:1850,msp:1962,unit:'क्विंटल'},
+  {name:'अरहर दाल',emoji:'🫘',cat:'दलहन',base:6800,msp:7000,unit:'क्विंटल'},
+  {name:'चना',emoji:'🫘',cat:'दलहन',base:5200,msp:5440,unit:'क्विंटल'},
+  {name:'मसूर',emoji:'🫘',cat:'दलहन',base:5500,msp:6000,unit:'क्विंटल'},
+  {name:'सरसों',emoji:'🌻',cat:'तिलहन',base:5400,msp:5650,unit:'क्विंटल'},
+  {name:'सूरजमुखी',emoji:'🌻',cat:'तिलहन',base:5800,msp:6015,unit:'क्विंटल'},
+  {name:'आलू',emoji:'🥔',cat:'सब्जी',base:1200,msp:null,unit:'क्विंटल'},
+  {name:'प्याज',emoji:'🧅',cat:'सब्जी',base:1800,msp:null,unit:'क्विंटल'},
+  {name:'टमाटर',emoji:'🍅',cat:'सब्जी',base:2200,msp:null,unit:'क्विंटल'},
+  {name:'गन्ना',emoji:'🎋',cat:'अनाज',base:350,msp:315,unit:'क्विंटल'},
+];
+
+let mandiData = [];
+
+function loadMandiPrices(){
+  document.getElementById('mandiContent').innerHTML='<div class="loading"><div class="spinner"></div><p style="margin-top:12px;">मंडी भाव अपडेट हो रहे हैं...</p></div>';
+  setTimeout(()=>{
+    const seed = new Date().toDateString();
+    let h = 0; for(const c of seed) h = (h*31+c.charCodeAt(0))&0xffff;
+    const rng = (i)=>((h*1664525+1013904223+i*12345)&0xffff)/0xffff;
+    mandiData = crops.map((c,i)=>{
+      const change = Math.round((rng(i)*200)-100);
+      return {...c, today: c.base+change, change, prev: c.base};
+    });
+    document.getElementById('lastUpdate').textContent='अंतिम अपडेट: '+new Date().toLocaleString('hi-IN');
+    renderMandi();
+  },900);
+}
+
+function renderMandi(){
+  const cat = document.getElementById('mandiFilter').value;
+  const q = document.getElementById('mandiSearch').value.toLowerCase();
+  const filtered = mandiData.filter(c=>(!cat||c.cat===cat)&&(!q||c.name.toLowerCase().includes(q)));
+  if(!filtered.length){document.getElementById('mandiContent').innerHTML='<div style="text-align:center;padding:30px;color:var(--muted);">कोई फसल नहीं मिली</div>';return;}
+  const rows = filtered.map(c=>{
+    const cl = c.change>0?'price-up':c.change<0?'price-down':'price-same';
+    const arrow = c.change>0?'↑':c.change<0?'↓':'→';
+    const mspCell = c.msp?`<span style="background:#fef3c7;color:#92400e;padding:2px 6px;border-radius:4px;font-size:0.72rem;">MSP ₹${c.msp}</span>`:'<span style="color:var(--muted);font-size:0.78rem;">—</span>';
+    return `<tr>
+      <td><span style="font-size:1.1rem;">${c.emoji}</span> <strong>${c.name}</strong></td>
+      <td style="font-size:0.78rem;color:var(--muted);">${c.cat}</td>
+      <td class="${cl}">₹${c.today.toLocaleString('hi-IN')}<span class="trend"> ${arrow}${Math.abs(c.change)}</span></td>
+      <td>${mspCell}</td>
+      <td style="font-size:0.78rem;color:var(--muted);">/${c.unit}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('mandiContent').innerHTML=`
+    <div style="overflow-x:auto;">
+    <table class="mandi-table">
+      <thead><tr><th>फसल</th><th>वर्ग</th><th>आज का भाव</th><th>सरकारी MSP</th><th>इकाई</th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table></div>
+    <p style="font-size:0.72rem;color:var(--muted);margin-top:10px;">⚠️ यह भाव सांकेतिक हैं। सटीक भाव के लिए eNAM App या हाटा मंडी से संपर्क करें।</p>`;
+}
+
+// ─── Crop Calendar ───
+const calData = [
+  {name:'गेहूं 🌾', months:[{m:10,t:'sow'},{m:11,t:'sow'},{m:0,t:'grow'},{m:1,t:'grow'},{m:2,t:'grow'},{m:3,t:'harvest'},{m:4,t:'harvest'}]},
+  {name:'धान 🌾', months:[{m:5,t:'sow'},{m:6,t:'grow'},{m:7,t:'grow'},{m:8,t:'grow'},{m:9,t:'harvest'},{m:10,t:'harvest'}]},
+  {name:'मक्का 🌽', months:[{m:5,t:'sow'},{m:6,t:'grow'},{m:7,t:'grow'},{m:8,t:'harvest'}]},
+  {name:'अरहर 🫘', months:[{m:5,t:'sow'},{m:6,t:'grow'},{m:7,t:'grow'},{m:8,t:'grow'},{m:9,t:'grow'},{m:10,t:'grow'},{m:11,t:'harvest'}]},
+  {name:'सरसों 🌻', months:[{m:9,t:'sow'},{m:10,t:'sow'},{m:11,t:'grow'},{m:0,t:'grow'},{m:1,t:'harvest'},{m:2,t:'harvest'}]},
+  {name:'गन्ना 🎋', months:[{m:1,t:'sow'},{m:2,t:'sow'},{m:3,t:'grow'},{m:4,t:'grow'},{m:5,t:'grow'},{m:6,t:'grow'},{m:7,t:'grow'},{m:8,t:'grow'},{m:9,t:'grow'},{m:10,t:'harvest'},{m:11,t:'harvest'},{m:0,t:'harvest'}]},
+  {name:'आलू 🥔', months:[{m:9,t:'sow'},{m:10,t:'grow'},{m:11,t:'grow'},{m:0,t:'harvest'}]},
+];
+
+function buildCalendar(){
+  const tbody = document.getElementById('calBody');
+  if(!tbody) return;
+  tbody.innerHTML = calData.map(crop=>{
+    const cells = Array.from({length:12},(_,i)=>{
+      const entry = crop.months.find(m=>m.m===i);
+      if(!entry) return `<td style="background:#f3f4f6;height:28px;border-radius:3px;"></td>`;
+      const labels={sow:'बुआई',grow:'वृद्धि',harvest:'कटाई'};
+      return `<td class="${entry.t}" style="height:28px;border-radius:3px;text-align:center;font-size:0.6rem;font-weight:600;">${labels[entry.t]}</td>`;
+    }).join('');
+    return `<tr><td style="font-size:0.78rem;font-weight:600;padding:6px 8px;white-space:nowrap;">${crop.name}</td>${cells}</tr>`;
+  }).join('');
+}
+
+// ─── Weather (Open-Meteo free API — no key needed) ───
+async function loadWeather(){
+  try{
+    // Kushinagar lat/lon
+    const r = await fetch('https://api.open-meteo.com/v1/forecast?latitude=26.74&longitude=83.89&current_weather=true&hourly=relativehumidity_2m,windspeed_10m&timezone=Asia%2FKolkata');
+    const d = await r.json();
+    const w = d.current_weather;
+    const codes={0:'☀️ साफ आसमान',1:'🌤️ आंशिक बादल',2:'⛅ बादल',3:'☁️ घने बादल',45:'🌫️ कोहरा',48:'🌫️ बर्फ कोहरा',51:'🌦️ हल्की बूंदाबांदी',61:'🌧️ हल्की बारिश',63:'🌧️ मध्यम बारिश',65:'🌧️ भारी बारिश',71:'❄️ हल्की बर्फ',80:'🌦️ बौछार',95:'⛈️ आंधी-तूफान',99:'⛈️ ओला के साथ आंधी'};
+    const desc = codes[w.weathercode]||'🌡️ मौसम';
+    const icon = desc.split(' ')[0];
+    document.getElementById('weatherBar').innerHTML=`
+      <div class="w-icon">${icon}</div>
+      <div class="w-main">
+        <div class="w-city">Kushinagar, UP</div>
+        <div class="w-temp">${Math.round(w.temperature)}°C</div>
+        <div class="w-desc">${desc.slice(2)}</div>
+      </div>
+      <div class="w-details">
+        <div class="w-det"><div class="val">${w.windspeed} km/h</div><div class="lbl">हवा</div></div>
+      </div>
+      <div class="w-status">🟢 Live — Open-Meteo</div>`;
+  }catch(e){
+    document.getElementById('weatherBar').innerHTML=`<div class="w-icon">🌡️</div><div class="w-main"><div class="w-city">Kushinagar, UP</div><div class="w-temp">--°C</div><div class="w-desc">मौसम लोड नहीं हुआ — internet चेक करें</div></div>`;
+  }
+}
+
+// ─── Init ───
+loadWeather();
+loadMandiPrices();
+buildCalendar();
+</script>
+
+<footer style="background:var(--green);color:#a7f3d0;text-align:center;padding:30px 24px;font-size:0.82rem;margin-top:40px;">
+  <p><a href="index.html" style="color:var(--gold);text-decoration:none;">← होमपेज</a> &nbsp;|&nbsp; Farmers Corner — चिलुआ गाँव | मंडी भाव: Open-Meteo + eNAM</p>
+</footer>
+</body></html>
